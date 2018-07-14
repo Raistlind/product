@@ -1,5 +1,6 @@
 package cn.krynn.product.service;
 
+import cn.krynn.product.dto.CartDTO;
 import cn.krynn.product.dataobject.ProductInfo;
 
 import java.util.List;
@@ -22,5 +23,11 @@ public interface ProductService {
      * @return
      */
     List<ProductInfo> findList(List<String> productIdList);
+
+    /**
+     * 扣库货
+     * @param cartDTOList
+     */
+    void decreaseStock(List<CartDTO> cartDTOList);
 
 }

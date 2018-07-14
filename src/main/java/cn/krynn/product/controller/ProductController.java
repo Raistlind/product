@@ -1,5 +1,6 @@
 package cn.krynn.product.controller;
 
+import cn.krynn.product.dto.CartDTO;
 import cn.krynn.product.VO.ProductInfoVO;
 import cn.krynn.product.VO.ProductVO;
 import cn.krynn.product.VO.ResultVO;
@@ -82,5 +83,10 @@ public class ProductController {
     @PostMapping("/listForOrder")
     public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
         return productService.findList(productIdList);
+    }
+
+    @PostMapping("/decreaseStock")
+    public void decreaseStock(@RequestBody List<CartDTO> cartDTOList) {
+        productService.decreaseStock(cartDTOList);
     }
 }
