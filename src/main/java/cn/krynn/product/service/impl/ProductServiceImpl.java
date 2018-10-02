@@ -7,6 +7,8 @@ import cn.krynn.product.enums.ResultEnum;
 import cn.krynn.product.exception.ProductException;
 import cn.krynn.product.repository.ProductInfoRepository;
 import cn.krynn.product.service.ProductService;
+import cn.krynn.product.utils.JsonUtil;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductInfoRepository productInfoRepository;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public List<ProductInfo> findUpAll() {
@@ -53,6 +58,10 @@ public class ProductServiceImpl implements ProductService {
 
             productInfo.setProductStock(result);
             productInfoRepository.save(productInfo);
+
+            // 发送MQ消息
+            amqpTemplate.convertAndSend("productInfo", JsonUtil.toJson(productInfo));
+
         }
     }
 }
