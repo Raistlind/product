@@ -39,6 +39,8 @@ public class ProductController {
      * 4.构造数据
      */
     @GetMapping("/list")
+    //支持跨域
+    //@CrossOrigin
     public ResultVO<ProductVO> list() {
 
         //1.查询所有在架的商品
